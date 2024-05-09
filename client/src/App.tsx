@@ -4,8 +4,10 @@ import TextSynth from "./components/TextSynth";
 function App() {
   const [begun, setBegun] = useState(false);
   return (
-    <div>
-      <h1 style={{ textAlign: "center" }}>Typing Performance</h1>
+    <div style={{ fontFamily: "Roboto" }}>
+      <h1 style={{ textAlign: "center", fontSize: "4em" }}>
+        Typing Performance
+      </h1>
       {begun ? (
         <TextSynth />
       ) : (

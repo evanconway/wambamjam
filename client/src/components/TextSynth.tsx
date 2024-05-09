@@ -87,7 +87,8 @@ const TextSynth = () => {
         width: "300px",
         height: "300px",
         resize: "none",
-        border: isPlayingBack ? undefined : "1px solid black",
+        padding: "0.5em",
+        border: isPlayingBack ? undefined : "1px solid",
       }}
     >
       {playbackText}

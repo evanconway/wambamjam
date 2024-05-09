@@ -1,0 +1,7 @@
+9th of May, 2024
+
+Worth starting a planning file to get my thoughts straight. My basic idea is the ability to record a typing performance, and play it back. We have the synth setup so we can make it musical, but I'm starting to think the playback of typing might feel more "instrument" like, even if there's no sound. Lucky that Greg was so loose with the description of an "instrument" here.
+
+So with that, let's not worry too much about the sound aspect yet. Let's just focus on getting the typing recorded and played back. Since we want to record all changes, I think we could simply create an array of "states", each is just a string of the text on any given change and the time that change occured. For playback we could get the time of the first event, and detuct that from all other event times to create a series of timeouts that change the playback state. I do think we also want to record the time from pressing record to the first keystroke, so perhaps we'll include some sort of special event which records the empty state and its time.
+
+I think that's the gist but I might be missing some details. Let's just hack at it and see what happens.

@@ -4,8 +4,8 @@ import { Synth } from "tone";
 const pitches = ["C4", "D4", "E4", "F4", "G4", "A4", "B4", "C5"];
 
 export const useSynth = () => {
-  const [synth] = useState<Synth>(
-    new Synth({
+  const [synth] = useState<Synth>(() => {
+    const result = new Synth({
       oscillator: {
         type: "fmsquare",
         modulationType: "sawtooth",
@@ -18,9 +18,9 @@ export const useSynth = () => {
         sustain: 0.1,
         release: 0.1,
       },
-    }).toDestination(),
-  );
-
+    }).toDestination();
+    return result;
+  });
   return synth;
 };
 

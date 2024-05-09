@@ -15,3 +15,5 @@ The share endpoint would require json of the typing performance. It would then n
 I think assigning different pitches to each keystroke is easier, and probably better fitting the jam. So let's go for that. A shame because I think the share is much cooler and would be more fun.
 
 We added the pitch selection option, and some basic styles. But I really dislike how it still makes noise on typing spaces. Let's try and cram one last feature in then call it quits. If the last character of a moment text is a space, we won't play it. And if we've really got time we'll add the ability to customize if a moment gets played or not.
+
+A quick fix, but it works. I'm tired. Let's call it quits on this.

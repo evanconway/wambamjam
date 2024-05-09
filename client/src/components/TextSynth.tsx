@@ -54,7 +54,7 @@ const TextSynth = () => {
       typedPerformance.map((moment, i) => {
         const result = setTimeout(() => {
           setPlaybackText(moment.text);
-          if (i > 0) playPitch(moment.pitch);
+          if (i > 0 && !moment.text.endsWith(" ")) playPitch(moment.pitch);
           if (i >= typedPerformance.length - 1) setPlaybackTimeoutArr([]);
         }, moment.time - timeReduce);
         return result;
@@ -104,7 +104,12 @@ const TextSynth = () => {
         {typedPerformance.slice(1).map((moment, i) => {
           return (
             <li key={i} style={{ marginBottom: "1em" }}>
-              <div>Event {i}</div>
+              <div>
+                Event {i}
+                {moment.text.endsWith(" ")
+                  ? " (no sound plays for this event)"
+                  : ""}
+              </div>
               <div>Time: {moment.time - startTimeOfPlayback}</div>
               <ShowText text={moment.text} />
               <div>

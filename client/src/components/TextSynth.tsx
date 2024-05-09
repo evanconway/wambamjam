@@ -94,6 +94,9 @@ const TextSynth = () => {
     </p>
   );
 
+  const startTimeOfPlayback =
+    typedPerformance.length > 0 ? typedPerformance[0].time : 0;
+
   const playbackPitchChooser =
     typedPerformance.length <= 0 || recording ? null : (
       <ul>
@@ -101,6 +104,7 @@ const TextSynth = () => {
           return (
             <li key={i} style={{ marginBottom: "1em" }}>
               <div>Event {i}</div>
+              <div>Time: {moment.time - startTimeOfPlayback}</div>
               <ShowText text={moment.text} />
               <div>
                 pitch:{" "}

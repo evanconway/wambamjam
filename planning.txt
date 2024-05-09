@@ -5,3 +5,11 @@ Worth starting a planning file to get my thoughts straight. My basic idea is the
 So with that, let's not worry too much about the sound aspect yet. Let's just focus on getting the typing recorded and played back. Since we want to record all changes, I think we could simply create an array of "states", each is just a string of the text on any given change and the time that change occured. For playback we could get the time of the first event, and detuct that from all other event times to create a series of timeouts that change the playback state. I do think we also want to record the time from pressing record to the first keystroke, so perhaps we'll include some sort of special event which records the empty state and its time.
 
 I think that's the gist but I might be missing some details. Let's just hack at it and see what happens.
+
+Ok, we got it recording typing, and playing it back. We only have a few hours left so we have to decide what we want to prioritize. Luckily we were able to fix the audio so sounds on type isn't an issue anymore. Let's add audio to the playback feature.
+
+But then I'm not sure which feature to prioritize next. The first is the ability to assign pitches to text changes. This would make it much more musical. The second is to add the ability to "share" performances. This would require adding the browser router, building the playback page using our existing models, and setting up the backend api endpoint.
+
+The share endpoint would require json of the typing performance. It would then need to store this information somehow, and assign a random id to it. Finally, the share page would have to request this data via that id as a query param, and rig up the playback after fetching the data.
+
+I think assigning different pitches to each keystroke is easier, and probably better fitting the jam. So let's go for that. A shame because I think the share is much cooler and would be more fun.

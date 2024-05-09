@@ -1,5 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
-import { useSynthKeyDown } from "../hooks";
+import { Pitch, usePlayPitch, useSynthKeyDown } from "../hooks";
+import ShowText from "./ShowText";
+import PitchChooser from "./PitchChooser";
 
 const TextSynth = () => {
   useSynthKeyDown();
@@ -8,14 +10,14 @@ const TextSynth = () => {
     "Click record, then type your performance...",
   );
   const [typedPerformance, setTypedPerformance] = useState<
-    { text: string; time: number }[]
+    { text: string; time: number; pitch: Pitch }[]
   >([]);
 
   const addTextChangeMoment = useMemo(() => {
     const result = (newText: string) => {
       setTypedPerformance([
         ...typedPerformance,
-        { text: newText, time: Date.now() },
+        { text: newText, time: Date.now(), pitch: "C4" },
       ]);
     };
     return result;
@@ -31,7 +33,7 @@ const TextSynth = () => {
   useEffect(() => {
     if (recording) {
       setText("");
-      setTypedPerformance([{ text: "", time: Date.now() }]);
+      setTypedPerformance([{ text: "", time: Date.now(), pitch: "C4" }]);
       document.getElementsByTagName("textarea")[0].focus();
     }
   }, [recording, setTypedPerformance, setText]);
@@ -40,6 +42,8 @@ const TextSynth = () => {
   useEffect(() => {
     if (!recording) setPlaybackText(text);
   }, [text, recording, setPlaybackText]);
+
+  const playPitch = usePlayPitch();
 
   // we determine if the app is "playing back" with the size of this timeout id array
   const [playbackTimeoutArr, setPlaybackTimeoutArr] = useState<number[]>([]);
@@ -50,6 +54,7 @@ const TextSynth = () => {
       typedPerformance.map((moment, i) => {
         const result = setTimeout(() => {
           setPlaybackText(moment.text);
+          if (i > 0) playPitch(moment.pitch);
           if (i >= typedPerformance.length - 1) setPlaybackTimeoutArr([]);
         }, moment.time - timeReduce);
         return result;
@@ -89,6 +94,36 @@ const TextSynth = () => {
     </p>
   );
 
+  const playbackPitchChooser =
+    typedPerformance.length <= 0 || recording ? null : (
+      <ul>
+        {typedPerformance.slice(1).map((moment, i) => {
+          return (
+            <li key={i} style={{ marginBottom: "1em" }}>
+              <div>Event {i}</div>
+              <ShowText text={moment.text} />
+              <div>
+                pitch:{" "}
+                <PitchChooser
+                  pitch={moment.pitch}
+                  onPitchChange={(newPitch) => {
+                    setTypedPerformance(
+                      typedPerformance.map((typingMoment, k) => {
+                        if (k === i + 1) {
+                          return { ...typingMoment, pitch: newPitch };
+                        }
+                        return typingMoment;
+                      }),
+                    );
+                  }}
+                />
+              </div>
+            </li>
+          );
+        })}
+      </ul>
+    );
+
   return (
     <div
       style={{
@@ -112,6 +147,7 @@ const TextSynth = () => {
           {isPlayingBack ? "Stop" : "Play"}
         </button>
       ) : null}
+      {playbackPitchChooser}
     </div>
   );
 };

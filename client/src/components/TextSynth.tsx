@@ -27,7 +27,12 @@ const TextSynth = () => {
 
   useEffect(() => {
     if (synth === null) return;
-    const onKeyDown = () => {
+    const onKeyDown = (ev: KeyboardEvent) => {
+      if (
+        ev.key.length !== 1 &&
+        !["backspace", "enter"].includes(ev.key.toLowerCase())
+      )
+        return;
       synth.triggerAttackRelease(
         pitches[Math.floor(Math.random() * pitches.length)],
         "8n",

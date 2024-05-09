@@ -1,9 +1,12 @@
+import { useState } from "react";
+import TextSynth from "./components/TextSynth";
+
 function App() {
-  return (
-    <div>
-      <div>hello world</div>
-      <div>this is the content</div>
-    </div>
+  const [begun, setBegun] = useState(false);
+  return begun ? (
+    <TextSynth />
+  ) : (
+    <button onClick={() => setBegun(true)}>Click To Start!</button>
   );
 }
 

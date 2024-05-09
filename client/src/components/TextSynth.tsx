@@ -4,7 +4,9 @@ import { useSynthKeyDown } from "../hooks";
 const TextSynth = () => {
   useSynthKeyDown();
   const [recording, setRecording] = useState(false);
-  const [text, setText] = useState("");
+  const [text, setText] = useState(
+    "Click record, then type your performance...",
+  );
   const [typedPerformance, setTypedPerformance] = useState<
     { text: string; time: number }[]
   >([]);
@@ -80,7 +82,7 @@ const TextSynth = () => {
         width: "300px",
         height: "300px",
         resize: "none",
-        border: "1px solid black",
+        border: isPlayingBack ? undefined : "1px solid black",
       }}
     >
       {playbackText}

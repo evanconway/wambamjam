@@ -24,8 +24,18 @@ export const useSynth = () => {
   return synth;
 };
 
-export const useSynthKeyDown = () => {
+export const usePlayRandomPitch = () => {
   const synth = useSynth();
+  return () => {
+    synth.triggerAttackRelease(
+      pitches[Math.floor(Math.random() * pitches.length)],
+      "8n",
+    );
+  };
+};
+
+export const useSynthKeyDown = () => {
+  const playSound = usePlayRandomPitch();
 
   useEffect(() => {
     const onKeyDown = (ev: KeyboardEvent) => {
@@ -34,10 +44,7 @@ export const useSynthKeyDown = () => {
         !["backspace", "enter"].includes(ev.key.toLowerCase())
       )
         return;
-      synth.triggerAttackRelease(
-        pitches[Math.floor(Math.random() * pitches.length)],
-        "8n",
-      );
+      playSound();
     };
     window.addEventListener("keydown", onKeyDown);
 
